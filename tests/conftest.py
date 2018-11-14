@@ -47,7 +47,7 @@ def email_task_app(request):
 def email_api_app(email_task_app):
     """Flask application fixture."""
     email_task_app.register_blueprint(
-        Blueprint('invenio_mail', __name__, template_folder='templates')
+        Blueprint('invenio_mail_test', __name__, template_folder='templates')
     )
 
     return email_task_app

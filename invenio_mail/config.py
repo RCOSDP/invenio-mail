@@ -13,3 +13,5 @@ please refer to
 `Flask-Mail <https://pythonhosted.org/Flask-Mail/#configuring-flask-mail>`_'s
 list of configuration variables.
 """
+INVENIO_MAIL_BASE_TEMPLATE = 'invenio_mail/base.html'
+INVENIO_MAIL_SETTING_TEMPLATE = 'invenio_mail/mail_setting.html'

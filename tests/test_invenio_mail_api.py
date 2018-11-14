@@ -16,8 +16,8 @@ from invenio_mail.api import TemplatedMessage
 def test_templated_message(email_api_app, email_params, email_ctx):
     """Test that all the fields given are inside the message."""
     with email_api_app.app_context():
-        msg = TemplatedMessage(template_body='invenio_mail/base.txt',
-                               template_html='invenio_mail/base.html',
+        msg = TemplatedMessage(template_body='invenio_mail_test/base.txt',
+                               template_html='invenio_mail_test/base.html',
                                ctx=email_ctx, **email_params)
 
         for key in email_params:

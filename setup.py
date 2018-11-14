@@ -47,6 +47,8 @@ setup_requires = [
 install_requires = [
     'Flask>=0.11.1',
     'Flask-Mail>=0.9.1',
+    'invenio-db>=1.0.0b9',
+    'invenio-admin>=1.0.0b4'
 ]
 
 packages = find_packages()
@@ -77,6 +79,12 @@ setup(
         ],
         'invenio_base.api_apps': [
             'invenio_mail = invenio_mail:InvenioMail',
+        ],
+        'invenio_admin.views': [
+            'invenio_mail = invenio_mail.admin:mail_adminview',
+        ],
+        'invenio_db.models': [
+            'invenio_mail = invenio_mail.models',
         ],
         'invenio_celery.tasks': [
             'invenio_mail = invenio_mail.tasks',
