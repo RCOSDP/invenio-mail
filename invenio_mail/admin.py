@@ -46,15 +46,15 @@ class MailSettingView(BaseView):
             'mail_default_sender': None}
         try:
             mail_cfg.update(_load_mail_cfg_from_db())
-            mail_cfg['mail_use_tls'] = False
-            mail_cfg['mail_use_ssl'] = False
             if request.method == 'POST':
-                mail_cfg.update(request.form.to_dict())
-                if 'mail_use_tls' in request.form.to_dict():
+                mail_cfg['mail_use_tls'] = False
+                mail_cfg['mail_use_ssl'] = False
+                rf = request.form.to_dict()
+                mail_cfg.update(rf)
+                if 'mail_use_tls' in rf:
                     mail_cfg['mail_use_tls'] = True
-                if 'mail_use_ssl' in request.form.to_dict():
+                if 'mail_use_ssl' in rf:
                     mail_cfg['mail_use_ssl'] = True
-                print(mail_cfg)
                 _save_mail_cfg_to_db(mail_cfg)
                 flash(_('Mail settings have been updated.'),
                       category='success')
