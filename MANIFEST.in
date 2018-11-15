@@ -28,3 +28,7 @@ recursive-include tests *.html
 recursive-include tests *.py
 recursive-include tests *.svg
 recursive-include tests *.txt
+
+# added by check_manifest.py
+recursive-include invenio_mail *.html
+recursive-include invenio_mail *.pot
