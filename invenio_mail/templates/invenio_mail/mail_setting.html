@@ -122,7 +122,7 @@
       <label>{{_("Recipient")}}</label>
     </div>
     <div class="col-sm-8">
-      <input type="text" name="recipient" id="recipient" value=''>
+      <input type="text" name="recipient" id="recipient" value={{test_form['recipient']}}>
     </div>
   </div>
   <div class="row">
@@ -130,7 +130,7 @@
       <label>{{_("Subject")}}</label>
     </div>
     <div class="col-sm-8">
-      <input type="text" name="subject" id="subject" value=''>
+      <input type="text" name="subject" id="subject" value={{test_from['subject']}}>
     </div>
   </div>
   <div class="row">
@@ -138,7 +138,7 @@
       <label>{{_("Body")}}</label>
     </div>
     <div class="col-sm-8">
-      <textarea type="text" name="body" id="body" form="mail_testing_form"></textarea>
+        <textarea type="text" name="body" id="body" form="mail_testing_form">{{test_form['body']}}</textarea>
     </div>
   </div>
   <div class="row">

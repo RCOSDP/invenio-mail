@@ -58,8 +58,12 @@ class MailSettingView(BaseView):
                 _save_mail_cfg_to_db(mail_cfg)
                 flash(_('Mail settings have been updated.'),
                       category='success')
+            test_form = {
+                'recipient' : '',
+                'subject' : '',
+                'body' : ''}
             return self.render(config.INVENIO_MAIL_SETTING_TEMPLATE,
-                               mail_cfg=mail_cfg)
+                               mail_cfg=mail_cfg, test_form=test_form)
         except:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
         return abort(400)
@@ -79,8 +83,13 @@ class MailSettingView(BaseView):
         except Exception as ex:
             flash(_('Failed to send mail.'), category='error')
             flash(_(str(ex)), category='error')
+        test_form = {
+            'recipient' : '',
+            'subject' : '',
+            'body' : ''}
+        test_form.update(rf)
         return self.render(config.INVENIO_MAIL_SETTING_TEMPLATE,
-                           mail_cfg=mail_cfg)
+                           mail_cfg=mail_cfg, test_form=test_form)
 
 
 mail_adminview = {
