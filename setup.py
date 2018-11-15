@@ -89,6 +89,9 @@ setup(
         ],
         'invenio_celery.tasks': [
             'invenio_mail = invenio_mail.tasks',
+        ],
+        'invenio_i18n.translations': [
+            'messages = invenio_mail',
         ]
     },
     extras_require=extras_require,
