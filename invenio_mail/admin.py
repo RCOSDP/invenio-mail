@@ -82,7 +82,7 @@ class MailSettingView(BaseView):
             flash(_('Test mail sent.'), category='success')
         except Exception as ex:
             flash(_('Failed to send mail.'), category='error')
-            flash(_(str(ex)), category='error')
+            flash(str(ex), category='error')
         test_form = {
             'recipient' : '',
             'subject' : '',
