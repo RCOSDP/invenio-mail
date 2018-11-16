@@ -12,14 +12,51 @@
 from __future__ import absolute_import, print_function
 
 import os
+import shutil
+import tempfile
 from datetime import datetime
 
 import pytest
 from flask import Blueprint, Flask
+from flask_admin import Admin
 from flask_celeryext import FlaskCeleryExt
 from six import StringIO
 
 from invenio_mail import InvenioMail, config
+from invenio_mail.admin import mail_adminview
+from invenio_db import InvenioDB, db
+
+from sqlalchemy_utils.functions import create_database, database_exists, \
+    drop_database
+
+
+@pytest.yield_fixture()
+def email_admin_app():
+    """Flask application fixture."""
+    instance_path = tempfile.mkdtemp()
+    base_app = Flask(__name__, instance_path=instance_path)
+
+    base_app.config.update(
+        SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI',
+                                          'sqlite://'),
+    )
+    InvenioDB(base_app)
+    InvenioMail(base_app)
+    base_app.jinja_loader.searchpath.append('tests/templates')
+    admin = Admin(base_app)
+    view_class = mail_adminview.pop('view_class')
+    admin.add_view(view_class(**mail_adminview['kwargs']))
+    with base_app.app_context():
+        if str(db.engine.url) != "sqlite://" and \
+                not database_exists(str(db.engine.url)):
+            create_database(str(db.engine.url))
+        db.create_all()
+
+    yield base_app
+
+    with base_app.app_context():
+        drop_database(str(db.engine.url))
+    shutil.rmtree(instance_path)
 
 
 @pytest.fixture(scope='session')
