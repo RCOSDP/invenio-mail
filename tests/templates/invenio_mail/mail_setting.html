@@ -19,14 +19,25 @@
 # MA 02111-1307, USA.
 #}
 
-{{mail_cfg['mail_server']}}
-{{mail_cfg['mail_port']}}
-{{mail_cfg['mail_use_tls']}}
-{{mail_cfg['mail_use_ssl']}}
-{{mail_cfg['mail_username']}}
-{{mail_cfg['mail_password']}}
-{{mail_cfg['mail_default_sender']}}
-{{test_form['recipient']}}
-{{test_form['subject']}}
-{{test_form['body']}}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+server={{mail_cfg['mail_server']}}
+port={{mail_cfg['mail_port']}}
+use_tls={{mail_cfg['mail_use_tls']}}
+use_ssl={{mail_cfg['mail_use_ssl']}}
+username={{mail_cfg['mail_username']}}
+password={{mail_cfg['mail_password']}}
+default_sender={{mail_cfg['mail_default_sender']}}
+
+recipient={{test_form['recipient']}}
+subject={{test_form['subject']}}
+body={{test_form['body']}}
 

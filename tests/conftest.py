@@ -35,8 +35,9 @@ def email_admin_app():
     """Flask application fixture."""
     instance_path = tempfile.mkdtemp()
     base_app = Flask(__name__, instance_path=instance_path)
-
     base_app.config.update(
+        SECRET_KEY='SECRET KEY',
+        SESSION_TYPE='memcached',
         SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI',
                                           'sqlite://'),
     )
@@ -44,7 +45,7 @@ def email_admin_app():
     InvenioMail(base_app)
     base_app.jinja_loader.searchpath.append('tests/templates')
     admin = Admin(base_app)
-    view_class = mail_adminview.pop('view_class')
+    view_class = mail_adminview['view_class']
     admin.add_view(view_class(**mail_adminview['kwargs']))
     with base_app.app_context():
         if str(db.engine.url) != "sqlite://" and \
@@ -74,7 +75,6 @@ def email_task_app(request):
         MAIL_SUPPRESS_SEND=True
     )
     FlaskCeleryExt(app)
-
     InvenioMail(app, StringIO())
 
     return app
