@@ -12,6 +12,7 @@
 from __future__ import absolute_import, print_function
 
 import os
+import time
 
 import pkg_resources
 from flask_mail import Attachment
@@ -93,7 +94,8 @@ def test_send_message_with_date(email_task_app):
             'date': 1456242014.398119
         }
 
+        os.environ['TZ'] = 'Europe/London'
+        time.tzset()
         send_email.delay(msg)
-
         result_stream = email_task_app.extensions['invenio-mail'].stream
         assert result_stream.getvalue().find('Date: Tue, 23 Feb 2016') != -1
