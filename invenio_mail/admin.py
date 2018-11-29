@@ -59,9 +59,9 @@ class MailSettingView(BaseView):
                 flash(_('Mail settings have been updated.'),
                       category='success')
             test_form = {
-                'recipient' : '',
-                'subject' : '',
-                'body' : ''}
+                'recipient': '',
+                'subject': '',
+                'body': ''}
             return self.render(config.INVENIO_MAIL_SETTING_TEMPLATE,
                                mail_cfg=mail_cfg, test_form=test_form)
         except:
@@ -84,9 +84,9 @@ class MailSettingView(BaseView):
             flash(_('Failed to send mail.'), category='error')
             flash(str(ex), category='error')
         test_form = {
-            'recipient' : '',
-            'subject' : '',
-            'body' : ''}
+            'recipient': '',
+            'subject': '',
+            'body': ''}
         test_form.update(rf)
         return self.render(config.INVENIO_MAIL_SETTING_TEMPLATE,
                            mail_cfg=mail_cfg, test_form=test_form)
