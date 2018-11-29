@@ -24,6 +24,7 @@ from six import StringIO
 
 from invenio_mail import InvenioMail, config
 from invenio_mail.admin import mail_adminview
+from invenio_mail.models import MailConfig
 from invenio_db import InvenioDB, db
 
 from sqlalchemy_utils.functions import create_database, database_exists, \
@@ -51,7 +52,7 @@ def email_admin_app():
         if str(db.engine.url) != "sqlite://" and \
                 not database_exists(str(db.engine.url)):
             create_database(str(db.engine.url))
-        db.create_all()
+        db.metadata.create_all(db.engine, tables=[MailConfig.__table__])
 
     yield base_app
 
