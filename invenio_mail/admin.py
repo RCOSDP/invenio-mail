@@ -31,6 +31,7 @@ def _set_flask_mail_cfg(cfg):
     current_app.extensions['mail'].use_tls = cfg['mail_use_tls']
     current_app.extensions['mail'].use_ssl = cfg['mail_use_ssl']
     current_app.extensions['mail'].default_sender = cfg['mail_default_sender']
+    current_app.extensions['mail'].debug = 0
 
 
 class MailSettingView(BaseView):
@@ -50,14 +51,28 @@ class MailSettingView(BaseView):
                 mail_cfg['mail_use_tls'] = False
                 mail_cfg['mail_use_ssl'] = False
                 rf = request.form.to_dict()
-                mail_cfg.update(rf)
-                if 'mail_use_tls' in rf:
-                    mail_cfg['mail_use_tls'] = True
-                if 'mail_use_ssl' in rf:
-                    mail_cfg['mail_use_ssl'] = True
-                _save_mail_cfg_to_db(mail_cfg)
-                flash(_('Mail settings have been updated.'),
-                      category='success')
+                # confirm data
+                check = True
+                if not rf.get('mail_server'):
+                    check = False
+                    flash(_('Mail server can\'t be empty.'), category='error')
+                if not rf.get('mail_port'):
+                    check = False
+                    flash(_('Mail port can\'t be empty.'), category='error')
+                if not rf.get('mail_default_sender'):
+                    check = False
+                    flash(_('Mail default sender can\'t be empty.'),
+                          category='error')
+                # if check ok, to update setting
+                if check:
+                    mail_cfg.update(rf)
+                    if 'mail_use_tls' in rf:
+                        mail_cfg['mail_use_tls'] = True
+                    if 'mail_use_ssl' in rf:
+                        mail_cfg['mail_use_ssl'] = True
+                    _save_mail_cfg_to_db(mail_cfg)
+                    flash(_('Mail settings have been updated.'),
+                          category='success')
             test_form = {
                 'recipient': '',
                 'subject': '',
@@ -68,8 +83,8 @@ class MailSettingView(BaseView):
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
         return abort(400)
 
-    @expose('/send_mail', methods=['POST'])
-    def send_mail(self):
+    @expose('/send_test_mail', methods=['POST'])
+    def send_test_mail(self):
         try:
             mail_cfg = _load_mail_cfg_from_db()
             _set_flask_mail_cfg(mail_cfg)

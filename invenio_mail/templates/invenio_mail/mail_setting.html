@@ -95,7 +95,8 @@
       <label>{{_("Password")}}</label>
     </div>
     <div class="col-xs-2">
-      <input type="password" class="form-control" name="mail_password" id="mail_password"
+      <input type="password" class="form-control" name="mail_password" 
+            id="mail_password" autocomplete="new-password" 
         {% if mail_cfg['mail_password'] %}
             value={{mail_cfg['mail_password']}}
         {% endif %}
@@ -130,7 +131,8 @@
     </div>
   </div>
   <div class="panel-body">
-<form method="POST" name="mail_testing_form" id="mail_testing_form" action={{url_for('mail.send_mail')}}>
+<form method="POST" name="mail_testing_form" id="mail_testing_form"
+    action={{url_for('mail.send_test_mail')}}>
   <div class="row">
     <div class="col-sm-2 text-right">
       <label>{{_("Recipient")}}</label>

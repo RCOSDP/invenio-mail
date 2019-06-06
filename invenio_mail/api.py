@@ -10,9 +10,10 @@
 
 from __future__ import absolute_import, print_function
 
-from flask import render_template
+from flask import current_app, render_template
 from flask_mail import Message
 
+from .admin import _load_mail_cfg_from_db, _set_flask_mail_cfg
 
 class TemplatedMessage(Message):
     """Siplify creation of templated messages."""
@@ -40,3 +41,19 @@ class TemplatedMessage(Message):
                 template_html, html=kwargs.get('html'), **ctx
             )
         super(TemplatedMessage, self).__init__(**kwargs)
+
+def send_mail(subject: str, recipient_list: list, body=None):
+    """Send mail."""
+
+    try:
+        mail_cfg = _load_mail_cfg_from_db()
+        _set_flask_mail_cfg(mail_cfg)
+        msg = Message()
+
+        msg.subject = subject
+        msg.recipients = recipient_list
+        msg.body = body
+
+        current_app.extensions['mail'].send(msg)
+    except Exception as ex:
+        print(ex)
