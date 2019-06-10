@@ -42,18 +42,17 @@ class TemplatedMessage(Message):
             )
         super(TemplatedMessage, self).__init__(**kwargs)
 
-def send_mail(subject: str, recipient_list: list, body=None):
+def send_mail(subject: str, recipient_list: list, body=None,
+              attachments: list=[]):
     """Send mail."""
-
     try:
         mail_cfg = _load_mail_cfg_from_db()
         _set_flask_mail_cfg(mail_cfg)
         msg = Message()
-
         msg.subject = subject
         msg.recipients = recipient_list
         msg.body = body
-
+        msg.attachments = attachments
         current_app.extensions['mail'].send(msg)
     except Exception as ex:
-        print(ex)
+        current_app.logger.error('Unable to send email: ' + subject, ex)
