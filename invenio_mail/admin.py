@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Admin model views for Mail sets."""
+
 import sys
 
 from flask import abort, current_app, flash, request
@@ -8,8 +10,9 @@ from flask_babelex import gettext as _
 from flask_mail import Message
 from werkzeug.local import LocalProxy
 
-from . import config
 from invenio_mail.models import MailConfig
+
+from . import config
 
 _app = LocalProxy(lambda: current_app.extensions['weko-admin'].app)
 
@@ -79,7 +82,7 @@ class MailSettingView(BaseView):
                 'body': ''}
             return self.render(config.INVENIO_MAIL_SETTING_TEMPLATE,
                                mail_cfg=mail_cfg, test_form=test_form)
-        except:
+        except BaseException:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
         return abort(400)
 

@@ -14,6 +14,7 @@ import sys
 import threading
 
 from flask_mail import Mail, email_dispatched
+
 from . import config
 from .views import blueprint
 

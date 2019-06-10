@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 
+"""InvenioMail views."""
 from flask import Blueprint
 from werkzeug.local import LocalProxy
 

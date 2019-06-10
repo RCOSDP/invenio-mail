@@ -24,6 +24,8 @@ from invenio_db import db
 
 
 class MailConfig(db.Model):
+    """Mail Config."""
+
     id = db.Column(db.Integer, primary_key=True)
     mail_server = db.Column(db.String(255), default='localhost')
     mail_port = db.Column(db.Integer, default=25)
@@ -35,6 +37,7 @@ class MailConfig(db.Model):
 
     @classmethod
     def get_config(cls):
+        """Get mail Config."""
         if len(cls.query.all()) < 1:
             db.session.add(cls())
             db.session.commit()
@@ -45,6 +48,7 @@ class MailConfig(db.Model):
 
     @classmethod
     def set_config(cls, new_config):
+        """Set mail Config."""
         cfg = cls.query.get(1)
         cfg.mail_server = new_config['mail_server']
         cfg.mail_port = int(new_config['mail_port'])

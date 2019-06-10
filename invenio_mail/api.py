@@ -15,6 +15,7 @@ from flask_mail import Message
 
 from .admin import _load_mail_cfg_from_db, _set_flask_mail_cfg
 
+
 class TemplatedMessage(Message):
     """Siplify creation of templated messages."""
 
@@ -42,8 +43,9 @@ class TemplatedMessage(Message):
             )
         super(TemplatedMessage, self).__init__(**kwargs)
 
+
 def send_mail(subject: str, recipient_list: list, body=None,
-              attachments: list=[]):
+              attachments: list = []):
     """Send mail."""
     try:
         mail_cfg = _load_mail_cfg_from_db()
