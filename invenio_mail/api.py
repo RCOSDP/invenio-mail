@@ -44,7 +44,7 @@ class TemplatedMessage(Message):
         super(TemplatedMessage, self).__init__(**kwargs)
 
 
-def send_mail(subject: str, recipient_list: list, body=None,
+def send_mail(subject: str, recipient_list: list, body=None, html=None,
               attachments: list = []):
     """Send mail."""
     try:
@@ -54,6 +54,7 @@ def send_mail(subject: str, recipient_list: list, body=None,
         msg.subject = subject
         msg.recipients = recipient_list
         msg.body = body
+        msg.html = html
         msg.attachments = attachments
         current_app.extensions['mail'].send(msg)
     except Exception as ex:
