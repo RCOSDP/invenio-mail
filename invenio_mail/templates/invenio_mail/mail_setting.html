@@ -117,7 +117,11 @@
   </div>
   <div class="row">
     <div class="form-actions">
-      <button type="submit" name="submit" value="mail_setting_form" class="btn btn-primary"><i class="fa fa-check"></i> {{ _('Update') }}</button>
+      <button type="submit" name="submit" value="mail_setting_form" class="btn btn-default"
+              style="width: 130px; height: 40px; font-size: 15px;">
+        <span class="glyphicon glyphicon-edit"></span> 
+            {{ _('Update') }}
+      </button>
     </div>
   </div>
 </form>
@@ -159,7 +163,10 @@
   </div>
   <div class="row">
     <div class="form-actions">
-      <button type="submit" name="test" value="mail_testing_form" class="btn btn-primary"><i class="fa fa-check"></i> {{ _('Send') }}</button>
+      <button type="submit" name="test" value="mail_testing_form" class="btn
+          btn-light" style="background-color: #32CD32;border-color: #808000;color: white;width: 120px;height: 40px;
+          font-size: 15px;">
+        <span class="glyphicon glyphicon-send"></span> {{_('Send') }}</button>
     </div>
   </div>
 </form>
