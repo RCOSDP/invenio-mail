@@ -120,17 +120,17 @@ class MailSettingView(BaseView):
 
         """
         try:
-			print('1')
+            print('1')
             msg = Message()
-			print('2')
+            print('2')
             msg.subject = rf['subject']
-			print('3')
+            print('3')
             msg.body = rf['body']
-			print('4')
+            print('4')
             msg.recipients = [rf['recipient']]
-			print('5')
+            print('5')
             current_app.extensions['mail'].send(msg)
-			print('6')
+            print('6')
             return True
         except Exception as ex:
             print(ex)
