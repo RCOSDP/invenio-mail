@@ -109,6 +109,30 @@ class MailSettingView(BaseView):
         return self.render(config.INVENIO_MAIL_SETTING_TEMPLATE,
                            mail_cfg=mail_cfg, test_form=test_form)
 
+    def send_statistic_mail(self, rf=None):
+        """ Send statistic mail to user.
+
+        Keyword Arguments:
+            rf {dictionary} -- mail data (default: {None})
+
+        Returns:
+            boolean -- True if send mail successfully
+
+        """
+        try:
+            mail_cfg = _load_mail_cfg_from_db()
+            _set_flask_mail_cfg(mail_cfg)
+            msg = Message()
+            rf = request.form.to_dict()
+            msg.subject = rf['subject']
+            msg.body = rf['body']
+            msg.recipients = [rf['recipient']]
+            current_app.extensions['mail'].send(msg)
+            return True
+        except Exception as ex:
+            print(ex)
+            return False
+
 
 mail_adminview = {
     'view_class': MailSettingView,
