@@ -120,6 +120,8 @@ class MailSettingView(BaseView):
 
         """
         try:
+            mail_cfg = _load_mail_cfg_from_db()
+            _set_flask_mail_cfg(mail_cfg)
             print('1')
             msg = Message()
             print('2')
