@@ -123,7 +123,6 @@ class MailSettingView(BaseView):
             mail_cfg = _load_mail_cfg_from_db()
             _set_flask_mail_cfg(mail_cfg)
             msg = Message()
-            rf = request.form.to_dict()
             msg.subject = rf['subject']
             msg.body = rf['body']
             msg.recipients = [rf['recipient']]
