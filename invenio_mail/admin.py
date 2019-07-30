@@ -109,7 +109,8 @@ class MailSettingView(BaseView):
         return self.render(config.INVENIO_MAIL_SETTING_TEMPLATE,
                            mail_cfg=mail_cfg, test_form=test_form)
 
-    def send_statistic_mail(self, rf):
+    @classmethod
+    def send_statistic_mail(cls, rf):
         """ Send statistic mail to user.
 
         Keyword Arguments:
@@ -122,20 +123,14 @@ class MailSettingView(BaseView):
         try:
             mail_cfg = _load_mail_cfg_from_db()
             _set_flask_mail_cfg(mail_cfg)
-            print('1')
             msg = Message()
-            print('2')
             msg.subject = rf['subject']
-            print('3')
             msg.body = rf['body']
-            print('4')
             msg.recipients = [rf['recipient']]
-            print('5')
             current_app.extensions['mail'].send(msg)
-            print('6')
             return True
         except Exception as ex:
-            print(ex)
+            current_app.logger.error('Cannot send email', ex)
             return False
 
 
