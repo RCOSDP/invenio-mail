@@ -111,7 +111,7 @@ class MailSettingView(BaseView):
 
     @classmethod
     def send_statistic_mail(cls, rf):
-        """ Send statistic mail to user.
+        """Send statistic mail to user.
 
         Keyword Arguments:
             rf {dictionary} -- mail data
